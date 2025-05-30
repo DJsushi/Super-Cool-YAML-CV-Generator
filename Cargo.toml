@@ -1,0 +1,10 @@
+[package]
+name = "rust-yaml-cv"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.39", features = ["derive"] }
+clap_complete = "4.5.52"
+handlebars = "6.3.2"
+yaml-rust2 = "0.10.2"
