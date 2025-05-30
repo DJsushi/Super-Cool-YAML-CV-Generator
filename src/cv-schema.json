@@ -1,11 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "idk yet",
   "type": "object",
   "properties": {
-    "name": {
-      "type": "string",
-      "pattern": "(\\w+ )*(\\w+)"
+    "cv": {
     }
-  }
+  },
+  "additionalProperties": false
 }
