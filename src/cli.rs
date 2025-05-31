@@ -5,21 +5,21 @@ use thiserror::Error;
 #[derive(Parser, Debug)]
 pub struct Cli {
     #[arg(long = "cv", value_name = "CV")]
-    cv_path: PathBuf,
+    pub cv_path: PathBuf,
 
     #[arg(long = "template", value_name = "TEMPLATE")]
-    template_path: PathBuf,
+    pub template_path: PathBuf,
 }
 
 #[derive(Error, Debug)]
 enum CliError {
-    #[error("Path does not exist")]
+    #[error("Path \"{0}\" does not exist")]
     PathDoesNotExist(PathBuf),
 
-    #[error("The path {0} does not point to a file")]
+    #[error("The path \"{0}\" does not point to a file")]
     NotAFile(PathBuf),
 
-    #[error("The path {0} does not point to a directory")]
+    #[error("The path \"{0}\" does not point to a directory")]
     NotADir(PathBuf),
 }
 

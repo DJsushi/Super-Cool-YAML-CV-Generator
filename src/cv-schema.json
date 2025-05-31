@@ -3,7 +3,175 @@
   "type": "object",
   "properties": {
     "cv": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "zip code": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "street",
+            "city",
+            "zip code",
+            "state",
+            "country"
+          ]
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "driving license": {
+          "type": "string"
+        },
+        "birth": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "place": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "date",
+            "place"
+          ]
+        },
+        "socials": {
+          "type": "object",
+          "properties": {
+            "phone": {
+              "type": "string"
+            },
+            "telegram": {
+              "type": "string"
+            },
+            "gitlab": {
+              "type": "string"
+            },
+            "github": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "linkedin": {
+              "type": "string"
+            }
+          }
+        },
+        "profile": {
+          "type": "string"
+        },
+        "hobbies": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "level": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10
+              }
+            },
+            "required": [
+              "title",
+              "level"
+            ]
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "level": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "level"
+            ]
+          }
+        },
+        "employment history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "start": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}$"
+              },
+              "end": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "start",
+              "end",
+              "description"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "address",
+        "nationality",
+        "birth",
+        "socials",
+        "profile"
+      ]
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "show_mugshot": {
+          "type": "boolean"
+        }
+      }
     }
   },
-  "additionalProperties": false
+  "required": [
+    "cv"
+  ]
 }
