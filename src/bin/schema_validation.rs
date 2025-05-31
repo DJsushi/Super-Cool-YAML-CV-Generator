@@ -1,8 +1,12 @@
-use serde_json::json;
+use std::process::exit;
 
 fn main() {
-    let schema: serde_json::Value = serde_json::from_str(include_str!("../cv-schema.json")).unwrap();
-    println!("{:#?}", schema);
+    let schema: serde_json::Value =
+        serde_json::from_str(include_str!("../cv-schema.json")).unwrap();
+    // println!("{:#?}", schema);
     let validation_error = jsonschema::meta::validate(&schema);
-    eprintln!("{:#?}", validation_error.err());
+    if let Some(error) = validation_error.err() {
+        eprintln!("{:#?}", error);
+        exit(1);
+    }
 }
