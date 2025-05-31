@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use serde_json::json;
 use std::path::{Path, PathBuf};
 use std::{fs, io};
 use thiserror::Error;
@@ -57,32 +56,27 @@ pub enum YamlCVJsonSchemaValidationError {
     #[error(transparent)]
     JsonSyntaxError(#[from] serde_yaml::Error),
 
-    #[error("Error validating the input CV YAML with the JSON schema")]
-    YamlCVValidationErrors(Vec<String>),
+    #[error("Error validating the input CV YAML with the JSON schema:\n{0}")]
+    YamlCVValidationErrors(String),
 }
 
 pub fn validate_yaml_cv_against_json_schema(
     yaml_cv_string: String,
 ) -> Result<(), YamlCVJsonSchemaValidationError> {
     let json_value: serde_json::Value = serde_yaml::from_str(&yaml_cv_string)?;
-    let schema = json!(include_str!("cv-schema.json"));
-    let validator = jsonschema::validator_for(&schema)
-        .map_err(|e| {
-            let error_msg = format!(
-                "A problem occurred while parsing the built-in JSON schema.\n\
-                 This is not your fault. Please contact the developer.\n"
-                e
-            );
-            panic!("{}", error_msg)
-        })
-        .unwrap();
+    let schema = serde_json::from_str(include_str!("cv-schema.json"))
+        .expect("Failed to parse embedded JSON schema");
+    let validator =
+        jsonschema::validator_for(&schema).expect("Failed to create JSON schema validator");
+
     let validation_errors: Vec<String> = validator
         .iter_errors(&json_value)
-        .map(|e| e.to_string())
+        .map(|e| format!("=> {}: {}", e.instance_path, e))
         .collect();
+
     if !validation_errors.is_empty() {
         return Err(YamlCVJsonSchemaValidationError::YamlCVValidationErrors(
-            validation_errors,
+            validation_errors.join("\n"),
         ));
     }
     Ok(())
