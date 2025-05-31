@@ -35,7 +35,7 @@ jobs:
       - name: Create pages directory and copy files
         run: |
           mkdir -p .pages
-          cp cv-schema.json .pages/
+          cp src/cv-schema.json .pages/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
